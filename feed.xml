@@ -1,5 +1,28 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<feed xmlns="http://www.w3.org/2005/Atom"><id>https://github.com/enderTree/gitblog</id><title>RSS feed of enderTree's gitblog</title><updated>2025-06-24T08:44:24.906259+00:00</updated><link href="https://github.com/enderTree/gitblog"/><link href="https://raw.githubusercontent.com/enderTree/gitblog/master/feed.xml" rel="self"/><generator uri="https://lkiesow.github.io/python-feedgen" version="1.0.0">python-feedgen</generator><entry><id>https://github.com/enderTree/gitblog/issues/4</id><title>解决Join数据倾斜</title><updated>2025-06-24T08:44:25.445289+00:00</updated><content type="html"><![CDATA[<p>优化前：</p>
+<feed xmlns="http://www.w3.org/2005/Atom"><id>https://github.com/enderTree/gitblog</id><title>RSS feed of enderTree's gitblog</title><updated>2025-06-24T08:55:35.889577+00:00</updated><link href="https://github.com/enderTree/gitblog"/><link href="https://raw.githubusercontent.com/enderTree/gitblog/master/feed.xml" rel="self"/><generator uri="https://lkiesow.github.io/python-feedgen" version="1.0.0">python-feedgen</generator><entry><id>https://github.com/enderTree/gitblog/issues/5</id><title>窗口函数的一些使用</title><updated>2025-06-24T08:55:36.141408+00:00</updated><content type="html"><![CDATA[<h4>1. 取最近一个不为空的值填充</h4>
+<pre><code>WITH mian_data AS (
+    SELECT
+        c0,
+        c1,
+        IF(c1 = &#x27;处置&#x27;, NULL, c2) AS c2
+    FROM
+        VALUES
+         (1,&#x27;处置&#x27;,&#x27;1&#x27;)
+        ,(2,&#x27;处置&#x27;,&#x27;2&#x27;)
+        ,(3,&#x27;处置&#x27;,&#x27;3&#x27;)
+        ,(4,&#x27;处置&#x27;,&#x27;4&#x27;)
+        ,(5,&#x27;提交&#x27;,&#x27;A&#x27;)
+        ,(6,&#x27;处置&#x27;,&#x27;5&#x27;)
+        ,(7,&#x27;提交&#x27;,&#x27;b&#x27;)
+    AS a(c0,c1,c2)
+)
+SELECT 
+    *,
+    FIRST_VALUE(c2, True) over(order by c0 ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING)
+FROM 
+    mian_data 
+</code></pre>
+]]></content><link href="https://github.com/enderTree/gitblog/issues/5"/><published>2025-06-24T08:55:19+00:00</published></entry><entry><id>https://github.com/enderTree/gitblog/issues/4</id><title>解决Join数据倾斜</title><updated>2025-06-24T08:55:36.236161+00:00</updated><content type="html"><![CDATA[<p>优化前：</p>
 <pre><code>SELECT 
         /*+ mapjoin(dd),skewjoin(a(url))*/
         a.* except(url_tag, join_key),
@@ -59,7 +82,7 @@
 <p>优化后执行时间</p>
 <img width="978" alt="Image" src="https://github.com/user-attachments/assets/74de5fc3-08ff-4ed6-8c94-9b0d31c18799" />
 <img width="944" alt="Image" src="https://github.com/user-attachments/assets/b2f397da-420d-484b-9655-3dda6ee57046" />
-]]></content><link href="https://github.com/enderTree/gitblog/issues/4"/><published>2025-06-24T08:44:10+00:00</published></entry><entry><id>https://github.com/enderTree/gitblog/issues/3</id><title>全局排序优化</title><updated>2025-06-24T08:44:25.523144+00:00</updated><content type="html"><![CDATA[<pre><code class="language-sql">
+]]></content><link href="https://github.com/enderTree/gitblog/issues/4"/><category term="sql"/><published>2025-06-24T08:44:10+00:00</published></entry><entry><id>https://github.com/enderTree/gitblog/issues/3</id><title>全局排序优化</title><updated>2025-06-24T08:55:36.345597+00:00</updated><content type="html"><![CDATA[<pre><code class="language-sql">
 CREATE TABLE talkie_dialogue.tmp_nana_data_1028_555 AS 
 WITH hash_bucket AS (
     SELECT  
