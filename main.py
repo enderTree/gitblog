@@ -30,6 +30,7 @@ IGNORE_LABELS = (
     + TODO_ISSUES_LABELS
     + ABOUT_LABELS
     + THINGS_LABELS
+    + PRIVATE_LABELS
 )
 
 FRIENDS_TABLE_HEAD = "| Name | Link | Desc | \n | ---- | ---- | ---- |\n"
