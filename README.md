@@ -7,9 +7,6 @@ My personal blog([About Me](xxx)) using issues and GitHub Actions (随意转载�
 ## 最近更新
 - [全局排序优化](https://github.com/enderTree/gitblog/issues/3)--2025-06-24
 - [测试一下](https://github.com/enderTree/gitblog/issues/2)--2025-06-24
-## baodan
-
-- [测试一下](https://github.com/enderTree/gitblog/issues/2)--2025-06-24
 ## sql
 
 - [全局排序优化](https://github.com/enderTree/gitblog/issues/3)--2025-06-24
