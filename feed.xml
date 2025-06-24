@@ -1,5 +1,65 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<feed xmlns="http://www.w3.org/2005/Atom"><id>https://github.com/enderTree/gitblog</id><title>RSS feed of enderTree's gitblog</title><updated>2025-06-24T08:29:03.857746+00:00</updated><link href="https://github.com/enderTree/gitblog"/><link href="https://raw.githubusercontent.com/enderTree/gitblog/master/feed.xml" rel="self"/><generator uri="https://lkiesow.github.io/python-feedgen" version="1.0.0">python-feedgen</generator><entry><id>https://github.com/enderTree/gitblog/issues/3</id><title>全局排序优化</title><updated>2025-06-24T08:29:04.089507+00:00</updated><content type="html"><![CDATA[<pre><code class="language-sql">
+<feed xmlns="http://www.w3.org/2005/Atom"><id>https://github.com/enderTree/gitblog</id><title>RSS feed of enderTree's gitblog</title><updated>2025-06-24T08:44:24.906259+00:00</updated><link href="https://github.com/enderTree/gitblog"/><link href="https://raw.githubusercontent.com/enderTree/gitblog/master/feed.xml" rel="self"/><generator uri="https://lkiesow.github.io/python-feedgen" version="1.0.0">python-feedgen</generator><entry><id>https://github.com/enderTree/gitblog/issues/4</id><title>解决Join数据倾斜</title><updated>2025-06-24T08:44:25.445289+00:00</updated><content type="html"><![CDATA[<p>优化前：</p>
+<pre><code>SELECT 
+        /*+ mapjoin(dd),skewjoin(a(url))*/
+        a.* except(url_tag, join_key),
+        CASE 
+            WHEN cc.url IS NOT NULL THEN &#x27;black_url&#x27;
+            WHEN dd.url IS NOT NULL THEN &#x27;black_url&#x27;
+            ELSE &#x27;&#x27;
+        END AS url_tag
+    FROM
+    (
+        select 
+            *,
+            1 AS join_key
+        from 
+            dwd_crawler_urls_step1_di a 
+        where 
+            ymd = &#x27;${P_DATE}&#x27;
+            AND url_tag != &#x27;black_url&#x27;
+    ) a
+    LEFT JOIN 
+        black_urls2 cc  
+        ON replace(a.host, &#x27;www.&#x27;, &#x27;&#x27;) = replace(cc.url, &#x27;www.&#x27;, &#x27;&#x27;)
+	LEFT JOIN 
+        black_urls1 dd  
+        ON INSTR(a.url, dd.url) &gt; 0
+</code></pre>
+<p>优化后</p>
+<pre><code>SELECT 
+        /*+ mapjoin(dd),skewjoin(a(url))*/
+        a.* except(url_tag, join_key),
+        CASE 
+            WHEN cc.url IS NOT NULL THEN &#x27;black_url&#x27;
+            WHEN dd.url IS NOT NULL THEN &#x27;black_url&#x27;
+            ELSE &#x27;&#x27;
+        END AS url_tag
+    FROM
+    (
+        select 
+            *,
+            1 AS join_key
+        from 
+            dwd_crawler_urls_step1_di a 
+        where 
+            ymd = &#x27;${P_DATE}&#x27;
+            AND url_tag != &#x27;black_url&#x27;
+    ) a
+    LEFT JOIN 
+        black_urls1 dd  
+        ON INSTR(a.url, dd.url) &gt; 0
+    LEFT JOIN 
+        black_urls2 cc  
+        ON replace(a.host, &#x27;www.&#x27;, &#x27;&#x27;) = replace(cc.url, &#x27;www.&#x27;, &#x27;&#x27;)
+</code></pre>
+<p>优化前执行时间</p>
+<img width="991" alt="Image" src="https://github.com/user-attachments/assets/3d62cdfd-b1e0-4579-adc9-a8bc19ac64ff" />
+<img width="872" alt="Image" src="https://github.com/user-attachments/assets/46033d2f-9fbe-4400-b6c6-489f97ee7f00" />
+<p>优化后执行时间</p>
+<img width="978" alt="Image" src="https://github.com/user-attachments/assets/74de5fc3-08ff-4ed6-8c94-9b0d31c18799" />
+<img width="944" alt="Image" src="https://github.com/user-attachments/assets/b2f397da-420d-484b-9655-3dda6ee57046" />
+]]></content><link href="https://github.com/enderTree/gitblog/issues/4"/><published>2025-06-24T08:44:10+00:00</published></entry><entry><id>https://github.com/enderTree/gitblog/issues/3</id><title>全局排序优化</title><updated>2025-06-24T08:44:25.523144+00:00</updated><content type="html"><![CDATA[<pre><code class="language-sql">
 CREATE TABLE talkie_dialogue.tmp_nana_data_1028_555 AS 
 WITH hash_bucket AS (
     SELECT  
@@ -48,5 +108,4 @@ JOIN
 <li>第二步根据桶大小计算每个桶的基址；</li>
 <li>第三步将桶基址+id在桶内的相对地址得到全局唯一的绝对地址id_index；</li>
 </ol>
-]]></content><link href="https://github.com/enderTree/gitblog/issues/3"/><category term="sql"/><published>2025-06-24T08:16:42+00:00</published></entry><entry><id>https://github.com/enderTree/gitblog/issues/2</id><title>测试一下</title><updated>2025-06-24T08:29:04.164438+00:00</updated><content type="html"><![CDATA[<p>111</p>
-]]></content><link href="https://github.com/enderTree/gitblog/issues/2"/><category term="baodan"/><published>2025-06-24T08:14:47+00:00</published></entry></feed>
+]]></content><link href="https://github.com/enderTree/gitblog/issues/3"/><category term="sql"/><published>2025-06-24T08:16:42+00:00</published></entry></feed>
