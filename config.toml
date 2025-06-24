@@ -2,6 +2,7 @@ base_url = "https://enderTree.github.io/gitblog/"
 generate_feeds = true
 feed_filenames = ["rss.xml"]
 theme = "even"
+highlight_code = true
 taxonomies = [
     {name = "categories", feed = true},
     {name = "tags", feed = true},
