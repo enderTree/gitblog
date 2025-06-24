@@ -1,7 +1,7 @@
 # [解决Join数据倾斜](https://github.com/enderTree/gitblog/issues/4)
 
 优化前：
-```
+```sql
 SELECT 
         /*+ mapjoin(dd),skewjoin(a(url))*/
         a.* except(url_tag, join_key),
@@ -20,7 +20,7 @@ SELECT
         where 
             ymd = '${P_DATE}'
             AND url_tag != 'black_url'
-    ) a
+    ) as
     LEFT JOIN 
         black_urls2 cc  
         ON replace(a.host, 'www.', '') = replace(cc.url, 'www.', '')
@@ -29,7 +29,7 @@ SELECT
         ON INSTR(a.url, dd.url) > 0
 ```
 优化后
-```
+```sql
 SELECT 
         /*+ mapjoin(dd),skewjoin(a(url))*/
         a.* except(url_tag, join_key),

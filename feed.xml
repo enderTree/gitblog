@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<feed xmlns="http://www.w3.org/2005/Atom"><id>https://github.com/enderTree/gitblog</id><title>RSS feed of enderTree's gitblog</title><updated>2025-06-24T09:47:51.689446+00:00</updated><link href="https://github.com/enderTree/gitblog"/><link href="https://raw.githubusercontent.com/enderTree/gitblog/master/feed.xml" rel="self"/><generator uri="https://lkiesow.github.io/python-feedgen" version="1.0.0">python-feedgen</generator><entry><id>https://github.com/enderTree/gitblog/issues/5</id><title>窗口函数的一些使用</title><updated>2025-06-24T09:47:51.889712+00:00</updated><content type="html"><![CDATA[<h4>1. 取最近一个不为空的值填充</h4>
+<feed xmlns="http://www.w3.org/2005/Atom"><id>https://github.com/enderTree/gitblog</id><title>RSS feed of enderTree's gitblog</title><updated>2025-06-24T09:55:31.361038+00:00</updated><link href="https://github.com/enderTree/gitblog"/><link href="https://raw.githubusercontent.com/enderTree/gitblog/master/feed.xml" rel="self"/><generator uri="https://lkiesow.github.io/python-feedgen" version="1.0.0">python-feedgen</generator><entry><id>https://github.com/enderTree/gitblog/issues/5</id><title>窗口函数的一些使用</title><updated>2025-06-24T09:55:31.644554+00:00</updated><content type="html"><![CDATA[<h4>1. 取最近一个不为空的值填充</h4>
 <pre><code class="language-sql">WITH mian_data AS (
     SELECT
         c0,
@@ -22,8 +22,8 @@ SELECT
 FROM 
     mian_data 
 </code></pre>
-]]></content><link href="https://github.com/enderTree/gitblog/issues/5"/><category term="sql"/><published>2025-06-24T08:55:19+00:00</published></entry><entry><id>https://github.com/enderTree/gitblog/issues/4</id><title>解决Join数据倾斜</title><updated>2025-06-24T09:47:52.003747+00:00</updated><content type="html"><![CDATA[<p>优化前：</p>
-<pre><code>SELECT 
+]]></content><link href="https://github.com/enderTree/gitblog/issues/5"/><category term="sql"/><published>2025-06-24T08:55:19+00:00</published></entry><entry><id>https://github.com/enderTree/gitblog/issues/4</id><title>解决Join数据倾斜</title><updated>2025-06-24T09:55:31.760239+00:00</updated><content type="html"><![CDATA[<p>优化前：</p>
+<pre><code class="language-sql">SELECT 
         /*+ mapjoin(dd),skewjoin(a(url))*/
         a.* except(url_tag, join_key),
         CASE 
@@ -41,7 +41,7 @@ FROM
         where 
             ymd = &#x27;${P_DATE}&#x27;
             AND url_tag != &#x27;black_url&#x27;
-    ) a
+    ) as
     LEFT JOIN 
         black_urls2 cc  
         ON replace(a.host, &#x27;www.&#x27;, &#x27;&#x27;) = replace(cc.url, &#x27;www.&#x27;, &#x27;&#x27;)
@@ -50,7 +50,7 @@ FROM
         ON INSTR(a.url, dd.url) &gt; 0
 </code></pre>
 <p>优化后</p>
-<pre><code>SELECT 
+<pre><code class="language-sql">SELECT 
         /*+ mapjoin(dd),skewjoin(a(url))*/
         a.* except(url_tag, join_key),
         CASE 
@@ -82,7 +82,7 @@ FROM
 <p>优化后执行时间</p>
 <img width="978" alt="Image" src="https://github.com/user-attachments/assets/74de5fc3-08ff-4ed6-8c94-9b0d31c18799" />
 <img width="944" alt="Image" src="https://github.com/user-attachments/assets/b2f397da-420d-484b-9655-3dda6ee57046" />
-]]></content><link href="https://github.com/enderTree/gitblog/issues/4"/><category term="sql"/><published>2025-06-24T08:44:10+00:00</published></entry><entry><id>https://github.com/enderTree/gitblog/issues/3</id><title>全局排序优化</title><updated>2025-06-24T09:47:52.095070+00:00</updated><content type="html"><![CDATA[<pre><code class="language-sql">
+]]></content><link href="https://github.com/enderTree/gitblog/issues/4"/><category term="sql"/><published>2025-06-24T08:44:10+00:00</published></entry><entry><id>https://github.com/enderTree/gitblog/issues/3</id><title>全局排序优化</title><updated>2025-06-24T09:55:31.860444+00:00</updated><content type="html"><![CDATA[<pre><code class="language-sql">
 CREATE TABLE talkie_dialogue.tmp_nana_data_1028_555 AS 
 WITH hash_bucket AS (
     SELECT  
