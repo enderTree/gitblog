@@ -10,5 +10,6 @@ My personal blog([About Me](xxx)) using issues and GitHub Actions (随意转载�
 - [全局排序优化](https://github.com/enderTree/gitblog/issues/3)--2025-06-24
 ## sql
 
+- [窗口函数的一些使用](https://github.com/enderTree/gitblog/issues/5)--2025-06-24
 - [解决Join数据倾斜](https://github.com/enderTree/gitblog/issues/4)--2025-06-24
 - [全局排序优化](https://github.com/enderTree/gitblog/issues/3)--2025-06-24
